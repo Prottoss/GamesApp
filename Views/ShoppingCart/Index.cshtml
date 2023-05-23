@@ -1,0 +1,42 @@
+﻿@using GamesWebAppDB.ViewModels
+@model ShoppingCartViewModel
+
+
+<h2>Your shopping cart</h2>
+<div class="card">
+    <div class="card-header">
+        <div class="row mx-auto">
+            <div class="col text-center"></div>
+            <div class="col text-center">Game</div>
+            <div class="col text-center">Price</div>
+            <div class="col text-center">Qty</div>
+            <div class="col text-center">Sub Total</div>
+            <div class="col text-center"></div>
+        </div>
+    </div>
+    <div class="card-body">
+        @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+        {
+        <div class="row">
+            <div class="col text-center"><img src="~/images/@line.Game.imgurl" width=70px/></div>
+            <div class="col text-center">@line.Game.name</div>
+            <div class="col text-center">€@line.Game.price</div>
+            <div class="col text-center">@line.NoOfItems</div>
+            <div class="col text-center">€@((line.NoOfItems * line.Game.price))</div>
+            <div class="col text-center">
+                <a class="btn btn-danger m-0" 
+                asp-controller="ShoppingCart" 
+                asp-action="RemoveFromShoppingCart" 
+                asp-route-Id="@line.Game.Id"><i class="fa-solid fa-trash"></i></a>
+            </div>
+        </div>
+        <hr>
+        }
+    </div>
+    <div class="card-footer">
+        <div>
+            <h4 class="text-right">Total: €@Model.ShoppingCartTotal.ToString("0.00")</h4> 
+        </div>
+    </div>
+</div>
+

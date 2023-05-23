@@ -1,0 +1,36 @@
+﻿@model IEnumerable<GamesWebAppDB.Models.Game>
+@inject SignInManager<AppUser> signInManager;
+
+<h1>Games List</h1>
+<br>
+<hr>
+<div class="row row-cols-sm-3 g-3">
+    @foreach (var game in Model)
+    {
+        <div class="col-sm">
+            <div class="card shadow">
+                <img class="card-img-top" src="~/images/@game.imgurl" alt="game img">
+                <div class="card-body">
+                    <h4>@game.name</h4>
+                    <h6>@game.Genre.name</h6>
+                    <h5>€@game.price</h5>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@game.Id"><i class="fa-solid fa-circle-info"></i> Details</a>
+                    
+                    @if (signInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-success" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-Id="@game.Id"><i class="fa-solid fa-cart-plus"></i> Add to Cart</a>
+                    }
+                    @if(signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@game.Id"><i class="fa-solid fa-pen-to-square"></i> Edit</a> 
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@game.Id"><i class="fa-solid fa-trash-can"></i> Delete</a>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    }
+</div>
+<hr>

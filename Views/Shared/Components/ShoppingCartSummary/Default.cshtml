@@ -1,0 +1,7 @@
+﻿@using GamesWebAppDB.ViewModels
+@model ShoppingCartViewModel
+
+<li class="nav-item">
+   <a  class="nav-link" asp-area="" asp-controller="ShoppingCart" asp-action="AddToShoppingCart"><i class="fa-solid fa-cart-shopping"></i>
+           @Model.ShoppingCart.ShoppingCartItems.Count</a>
+</li>
